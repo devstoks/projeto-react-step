@@ -1,11 +1,12 @@
-
 import React from 'react';
+import PlacarDoJogo from './components/PlacarDoJogo';
 
-const Welcome = ({ name }) => (
-  <div>
-    <h1>Bem-vindo, {name}!</h1>
-  </div>
-);
+function App() {
+  return (
+    <div>
+      <PlacarDoJogo />
+    </div>
+  );
+}
 
-export default Welcome;
-          
+export default App;

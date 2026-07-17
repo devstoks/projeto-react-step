@@ -49,8 +49,42 @@ useEffect(() => {
 }, [jogando, minutos]);
 
   return (
-    <div style={{ textAlign: 'center', fontFamily: 'Arial' }}>
+    <div style={{ textAlign: 'center', fontFamily: 'Arial', padding: '20px' }}>
       <h1>Placar do Jogo</h1>
+
+      <h2>
+        {minutos.toString().padStart(2, '0')}:
+        {segundos.toString().padStart(2, '0')}
+        {acrescimos > 0 && ` +${acrescimos}`}
+      </h2>
+
+      <p>
+        {jogando ? 'Jogo em andamento' : intervaloAtivo ? 'Jogo pausado' : 'Jogo parado'}
+      </p>
+
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', fontSize: '2rem' }}>
+        <div>
+          <p>Casa</p>
+          <p>{golsCasa}</p>
+          <button onClick={golCasa}>Gol Casa</button>
+        </div>
+        <div>
+          <p>Visitante</p>
+          <p>{golsVisitante}</p>
+          <button onClick={golVisitante}>Gol Visitante</button>
+        </div>
+      </div>
+
+      <div style={{ marginTop: '20px' }}>
+        {jogando ? (
+          <button onClick={pausarJogo}>Pausar Jogo</button>
+        ) : (
+          <button onClick={voltarJogo}>Voltar Jogo</button>
+        )}
+        {minutos >= 90 && acrescimos < 5 && (
+          <button onClick={adicionarAcrescimo}>Adicionar Acréscimo</button>
+        )}
+      </div>
     </div>
   );
 };
