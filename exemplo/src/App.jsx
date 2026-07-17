@@ -1,13 +1,10 @@
-
 import React from 'react';
-import Welcome from './components/Welcome';
+import PlacarDoJogo from './components/PlacarDoJogo';
 
 function App() {
   return (
     <div>
-      <Welcome name="Matheus" />
-      <p>Este é o parágrafo do App.</p>
-      <p>Testando como ele atualiza apenas este campo</p>
+      <PlacarDoJogo />
     </div>
   );
 }
