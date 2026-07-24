@@ -1,14 +1,12 @@
-
 import React from 'react';
-import Pai from './components/Pai';
+import ListaDeProdutos from './components/ListaDeProdutos';
 
 function App() {
   return (
     <div>
-      <Pai />
+      <ListaDeProdutos />
     </div>
   );
 }
 
 export default App;
-          
