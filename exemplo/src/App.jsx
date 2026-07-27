@@ -1,10 +1,12 @@
 import React from 'react';
-import ListaDeProdutos from './components/ListaDeProdutos';
+import PaiFormulario from './components/PaiFormulario';
 
+// Componente principal da aplicação
 function App() {
   return (
     <div>
-      <ListaDeProdutos />
+      {/* Renderiza o componente Pai */}
+      <PaiFormulario />
     </div>
   );
 }
