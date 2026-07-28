@@ -1,12 +1,12 @@
 import React from 'react';
-import PaiFormulario from './components/PaiFormulario';
+import ListaFiltrada from './Aula04/ListaFiltrada';
 
 // Componente principal da aplicação
 function App() {
   return (
     <div>
-      {/* Renderiza o componente Pai */}
-      <PaiFormulario />
+      <h1>Exemplo de Comunicação entre Componentes</h1>
+      <ListaFiltrada />
     </div>
   );
 }
