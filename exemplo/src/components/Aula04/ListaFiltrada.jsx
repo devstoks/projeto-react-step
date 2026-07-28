@@ -3,10 +3,10 @@ import './ListaFiltrada.css';
 
 const ListaFiltrada = () => {
   const produtos = [
-    { nome: 'Notebook', preco: 2500, categoria: 'Eletrônicos' },
-    { nome: 'Smartphone', preco: 1500, categoria: 'Eletrônicos' },
-    { nome: 'Tablet', preco: 800, categoria: 'Eletrônicos' },
-    { nome: 'Monitor', preco: 600, categoria: 'Eletrônicos' },
+    { id: 1, nome: 'Notebook', preco: 2500, categoria: 'Eletrônicos' },
+    { id: 2, nome: 'Smartphone', preco: 1500, categoria: 'Eletrônicos' },
+    { id: 3, nome: 'Tablet', preco: 800, categoria: 'Eletrônicos' },
+    { id: 4, nome: 'Monitor', preco: 600, categoria: 'Eletrônicos' },
   ];
 
   const produtosFiltrados = produtos.filter(
@@ -29,6 +29,7 @@ const ListaFiltrada = () => {
         <tbody>
           {produtosFiltrados.map((produto, index) => (
             <tr key={index}>
+              <td>{produto.id}</td>
               <td>{produto.nome}</td>
               <td>R$ {produto.preco}</td>
               <td>{produto.categoria}</td>
