@@ -1,5 +1,5 @@
 import React from 'react';
-import ListaFiltrada from './Aula04/ListaFiltrada';
+import ListaFiltrada from './components/Aula04/ListaFiltrada';
 
 // Componente principal da aplicação
 function App() {
