@@ -1,21 +1,21 @@
 
-import ButtonCSS from './components/Aula06/ButtonCSS';
-import ButtonInline from './components/Aula06/ButtonInline';
-import ButtonStyled from './components/Aula06/ButtonStyled';
+import ButtonModules from './ButtonModules';
+import ButtonTailwind from './ButtonTailwind';
+import ButtonMUI from './ButtonMUI';
 
 function App() {
   return (
     <div>
-      <h1>Botão com CSS Externo</h1>
-      <ButtonCSS label="CSS Externo" />
+      <h1>Botão com CSS Modules</h1>
+      <ButtonModules label="CSS Modules" />
 
-      <h1>Botão com Inline Styles</h1>
-      <ButtonInline label="Primário" primary />
-      <ButtonInline label="Secundário" />
+      <h1>Botão com Tailwind CSS</h1>
+      <ButtonTailwind label="Primário" primary />
+      <ButtonTailwind label="Secundário" />
 
-      <h1>Botão com Styled Components</h1>
-      <ButtonStyled label="Primário" primary />
-      <ButtonStyled label="Secundário" />
+      <h1>Botão com Material-UI</h1>
+      <ButtonMUI label="Primary" primary />
+      <ButtonMUI label="Secondary" />
     </div>
   );
 }
