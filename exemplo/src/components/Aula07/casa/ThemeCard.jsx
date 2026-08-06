@@ -4,7 +4,7 @@ import styleLight from "./ThemeCardLight.module.css";
 
 
 const ThemedCard = ({ title, description, theme }) => {
-    // Importar o CSS Module correspondente com base na prop theme
+    // Selecionar o CSS Module com base na prop theme
     const styles = theme === "light" ? styleLight : styleDark;
     return (
         <div className={styles.card}>
