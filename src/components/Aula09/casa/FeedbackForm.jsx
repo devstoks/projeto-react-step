@@ -8,6 +8,8 @@ const FeedbackForm = () => {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
 
+    const [errors, setErrors] = useState({});
+
     // Estado do feedback enviado
     // 2. cria-se o estado do feedback enviado com useState, que será um objeto com os campos name, email e message
     const [submitted, setSubmitted] = useState(null);
@@ -16,46 +18,42 @@ const FeedbackForm = () => {
     // 3. cria-se a função validateForm que valida os campos do formulário, retornando true se todos os campos forem válidos e false caso contrário
     const validateForm = () => {
 
-        // faz a validação do nome, email e mensagem, exibindo alertas caso algum campo seja inválido
-        if (!name.trim()) {
-            alert('Nome é obrigatório');
-            return false;
-        } else if (name.length < 3) {
-            alert('Nome deve ter no mínimo 3 caracteres');
-            return false;
-        } else if (name.length > 50) {
-            alert('Nome deve ter no máximo 50 caracteres');
-            return false;
-        } else if (!/^[a-zA-Z\s]+$/.test(name)) {
-            alert('Nome deve conter apenas letras e espaços');
-            return false;
-        }
+    const newErrors = {};
+
+    // Validação do nome
+    if (!name.trim()) {
+        newErrors.name = 'Nome é obrigatório';
+    } else if (name.length < 3) {
+        newErrors.name = 'Nome deve ter no mínimo 3 caracteres';
+    } else if (name.length > 50) {
+        newErrors.name = 'Nome deve ter no máximo 50 caracteres';
+    } else if (!/^[a-zA-Z\s]+$/.test(name)) {
+        newErrors.name = 'Nome deve conter apenas letras e espaços';
+    }
 
 
-        // Validação do email
-        if (!email.trim()) {
-            alert('Email é obrigatório');
-            return false;
-        } else if (!/\S+@\S+\.\S+/.test(email)) {
-            alert('Email inválido');
-            return false;
-        }
+    // Validação do email
+    if (!email.trim()) {
+        newErrors.email = 'Email é obrigatório';
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+        newErrors.email = 'Email inválido';
+    }
 
 
-        // Validação da mensagem
-        if (!message.trim()) {
-            alert('Mensagem é obrigatória');
-            return false;
-        } else if (message.length < 10) {
-            alert('Mensagem deve ter no mínimo 10 caracteres');
-            return false;
-        } else if (message.length > 500) {
-            alert('Mensagem deve ter no máximo 500 caracteres');
-            return false;
-        }
+    // Validação da mensagem
+    if (!message.trim()) {
+        newErrors.message = 'Mensagem é obrigatória';
+    } else if (message.length < 10) {
+        newErrors.message = 'Mensagem deve ter no mínimo 10 caracteres';
+    } else if (message.length > 500) {
+        newErrors.message = 'Mensagem deve ter no máximo 500 caracteres';
+    }
 
-        return true;
-    };
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+};
 
 
     // 4. cria-se a função handleSubmit que é chamada quando o formulário é enviado, 
@@ -79,6 +77,7 @@ const FeedbackForm = () => {
         setEmail('');
         setMessage('');
         setSubmitted(null);
+        setErrors({}); // Limpa os erros
     };
 
 
@@ -114,6 +113,8 @@ const FeedbackForm = () => {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
+
+                        {errors.name && <span className="error-message">{errors.name}</span>}
                     </div>
 
 
@@ -130,6 +131,7 @@ const FeedbackForm = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
+                        {errors.email && <span className="error-message">{errors.email}</span>}
                     </div>
 
                 </div>
@@ -147,6 +149,7 @@ const FeedbackForm = () => {
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                     />
+                    {errors.message && <span className="error-message">{errors.message}</span>}
                 </div>
 
 

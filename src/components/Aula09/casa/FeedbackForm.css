@@ -347,3 +347,20 @@
 .message-data strong {
     line-height: 1.5;
 }
+
+
+/* ERRO */
+.error-message {
+    margin-top: -5px;
+    margin-bottom: 8px;
+
+    color: #dc2626;
+
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.form-group input:has(+ .error-message),
+.form-group textarea:has(+ .error-message) {
+    border-color: #dc2626;
+}
