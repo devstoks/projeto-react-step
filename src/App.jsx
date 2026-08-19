@@ -1,10 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import BoasVindas from './components/Aula01/Casa/BoasVindas';
+import RelogioDigital from './components/Aula02/Casa/RelogioDigital';
 
 const App = () => {
   return (
-    <BoasVindas nome="Matheus"></BoasVindas>
+    <div>
+      <RelogioDigital></RelogioDigital>
+    </div>
   );
 };
 
