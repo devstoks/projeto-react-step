@@ -8,7 +8,7 @@ const Navbar = () => {
         localStorage.removeItem('logado');
         localStorage.removeItem('role');
 
-        window.location.href = '/Login';
+        window.location.href = '/login';
     };
 
     return (
