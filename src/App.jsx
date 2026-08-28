@@ -35,7 +35,7 @@ function App() {
         />
 
         <Route
-          path="/user/home/produtos/editar/:id"
+          path="/user/produtos/editar/:id"
           element={
             <PrivateRoute>
               <EditarProduto />
