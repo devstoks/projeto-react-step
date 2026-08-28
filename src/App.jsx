@@ -26,7 +26,7 @@ function App() {
         />
 
         <Route
-          path="/user/produtos/novo"
+          path="/user/novo-produto"
           element={
             <PrivateRoute>
               <CreateProduct />
@@ -35,7 +35,7 @@ function App() {
         />
 
         <Route
-          path="/user/produtos/editar/:id"
+          path="/user/home/produtos/editar/:id"
           element={
             <PrivateRoute>
               <EditarProduto />

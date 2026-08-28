@@ -31,7 +31,7 @@ const Home = () => {
 
                         <button
                             onClick={() =>
-                                navigate('/Home/user/create-product')
+                                navigate('/user/novo-produto') // Navega para a página de criação de produto
                             }
                             className="rounded-lg bg-green-600 px-5 py-2.5 font-semibold text-white shadow-sm transition hover:bg-green-700"
                         >

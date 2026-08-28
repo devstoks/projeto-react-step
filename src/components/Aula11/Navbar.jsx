@@ -8,7 +8,7 @@ const Navbar = () => {
         localStorage.removeItem('logado');
         localStorage.removeItem('role');
 
-        window.location.href = '/Login';
+        window.location.href = '/login';
     };
 
     return (
@@ -18,7 +18,7 @@ const Navbar = () => {
 
                 {/* Logo / Nome */}
                 <NavLink
-                    to={token ? "/user/home" : "/Login"}
+                    to={token ? "/user/home" : "/login"}
                     className="text-xl font-bold tracking-wide transition hover:text-blue-400"
                 >
                     Aula 11
