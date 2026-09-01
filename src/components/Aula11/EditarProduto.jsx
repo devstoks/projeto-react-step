@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Navbar from './Navbar';
 
 const EditarProduto = () => {
     // Pega o ID do produto da URL
@@ -25,7 +26,10 @@ const EditarProduto = () => {
         const fetchProduto = async () => {
             try {
                 // Faz uma requisição GET para buscar o produto pelo ID
-                const response = await axios.get(`https://projeto-node-step-t5i1.vercel.app/produtos/${id}`);
+                const response = await axios.get(
+                    `https://projeto-node-step-t5i1.vercel.app/produtos/${id}`
+                );
+
                 // Armazena os dados do produto no estado
                 setProduto(response.data);
             } catch (error) {
@@ -33,37 +37,32 @@ const EditarProduto = () => {
             }
         };
 
-        fetchProduto(); // Chama a função
-    }, [id]); // Executa sempre que o ID mudar
+        fetchProduto();
+    }, [id]);
 
     // Função que atualiza o estado quando o usuário digita nos campos
     const handleChange = (e) => {
-        // Pega o nome do campo (ex: "nome") e o valor digitado
         const { name, value } = e.target;
 
-        // Atualiza o estado manualmente sem usar spread operator
         setProduto({
-            // Se o campo que mudou for "nome", usa o novo valor, senão mantém o antigo
             nome: name === 'nome' ? value : produto.nome,
-            // Se o campo que mudou for "descricao", usa o novo valor, senão mantém o antigo
             descricao: name === 'descricao' ? value : produto.descricao,
-            // Se o campo que mudou for "preco", usa o novo valor, senão mantém o antigo
             preco: name === 'preco' ? value : produto.preco,
         });
     };
 
     // Função que envia o formulário para atualizar o produto
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Previne o recarregamento da página
+        e.preventDefault();
 
         try {
             // Faz uma requisição PUT para atualizar o produto
             await axios.put(
-                `https://projeto-node-step-t5i1.vercel.app/produtos/${id}`, // URL da API
-                produto, // Dados do produto que serão enviados
+                `https://projeto-node-step-t5i1.vercel.app/produtos/${id}`,
+                produto,
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`, // Token para autenticação
+                        Authorization: `Bearer ${token}`,
                     },
                 }
             );
@@ -74,7 +73,6 @@ const EditarProduto = () => {
             // Redireciona para a página inicial do usuário
             navigate('/user/home');
         } catch (error) {
-            // Mostra erro no console e alerta para o usuário
             console.error('Erro ao atualizar produto:', error);
             alert('Erro ao atualizar produto');
         }
@@ -82,38 +80,112 @@ const EditarProduto = () => {
 
     // Renderiza o formulário
     return (
-        <div>
-            <h2>Editar Produto</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Nome:</label>
-                    <input
-                        type="text"
-                        name="nome" // Nome do campo (usado no handleChange)
-                        value={produto.nome} // Valor atual do produto
-                        onChange={handleChange} // Função que executa quando digita
-                    />
+        <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-50 to-blue-100">
+
+            <Navbar />
+
+            <div className="mx-auto max-w-2xl px-4 py-10">
+
+                {/* Cabeçalho */}
+                <div className="mb-8 text-center">
+
+                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-600 text-3xl shadow-lg">
+                        ✏️
+                    </div>
+
+                    <h1 className="text-3xl font-bold text-gray-900">
+                        Editar Produto
+                    </h1>
+
+                    <p className="mt-2 text-gray-500">
+                        Altere as informações do seu produto
+                    </p>
+
                 </div>
-                <div>
-                    <label>Descrição:</label>
-                    <input
-                        type="text"
-                        name="descricao"
-                        value={produto.descricao}
-                        onChange={handleChange}
-                    />
+
+                {/* Formulário */}
+                <div className="rounded-2xl bg-white p-6 shadow-xl sm:p-8">
+
+                    <form onSubmit={handleSubmit}>
+
+                        {/* Nome */}
+                        <div className="mb-5">
+
+                            <label className="mb-2 block text-sm font-semibold text-gray-700">
+                                Nome do produto
+                            </label>
+
+                            <input
+                                type="text"
+                                name="nome"
+                                value={produto.nome}
+                                onChange={handleChange}
+                                placeholder="Ex: iPhone 12"
+                                className="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                            />
+
+                        </div>
+
+                        {/* Descrição */}
+                        <div className="mb-5">
+
+                            <label className="mb-2 block text-sm font-semibold text-gray-700">
+                                Descrição
+                            </label>
+
+                            <textarea
+                                name="descricao"
+                                value={produto.descricao}
+                                onChange={handleChange}
+                                placeholder="Descreva o produto..."
+                                rows="4"
+                                className="w-full resize-none rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                            />
+
+                        </div>
+
+                        {/* Preço */}
+                        <div className="mb-6">
+
+                            <label className="mb-2 block text-sm font-semibold text-gray-700">
+                                Preço
+                            </label>
+
+                            <div className="relative">
+
+                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-medium text-gray-500">
+                                    R$
+                                </span>
+
+                                <input
+                                    type="number"
+                                    name="preco"
+                                    step="0.01"
+                                    min="0"
+                                    value={produto.preco}
+                                    onChange={handleChange}
+                                    placeholder="0,00"
+                                    className="w-full rounded-xl border border-gray-300 bg-gray-50 py-3 pl-11 pr-4 text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                                />
+
+                            </div>
+
+                        </div>
+
+                        {/* Botão */}
+                        <button
+                            type="submit"
+                            className="w-full rounded-xl bg-blue-600 py-3.5 font-semibold text-white shadow-md transition hover:bg-blue-700 hover:shadow-lg active:scale-[0.99]"
+                        >
+                            Atualizar Produto
+                        </button>
+
+                    </form>
+
                 </div>
-                <div>
-                    <label>Preço:</label>
-                    <input
-                        type="number"
-                        name="preco"
-                        value={produto.preco}
-                        onChange={handleChange}
-                    />
-                </div>
-                <button type="submit">Atualizar Produto</button>
-            </form>
+
+            </div>
+
         </div>
     );
 };

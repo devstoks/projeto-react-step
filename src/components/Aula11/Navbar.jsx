@@ -70,18 +70,6 @@ const Navbar = () => {
                                 Home
                             </NavLink>
 
-                            <NavLink
-                                to="/user/produtos/novo"
-                                className={({ isActive }) =>
-                                    `rounded-lg px-4 py-2 text-sm font-medium transition ${isActive
-                                        ? 'bg-blue-600 text-white shadow-md'
-                                        : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                                    }`
-                                }
-                            >
-                                Criar Produto
-                            </NavLink>
-
                             <button
                                 onClick={handleLogout}
                                 className="ml-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-red-500/10 hover:text-red-400"
