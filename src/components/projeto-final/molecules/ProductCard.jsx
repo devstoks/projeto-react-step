@@ -1,6 +1,3 @@
-// Molécula: card visual de UM produto.
-// Sem lógica de API — só mostra dados e dispara callbacks de editar/excluir.
-
 import Button from '../atoms/Button';
 
 const ProductCard = ({ produto, onEditar, onExcluir }) => {
@@ -16,7 +13,6 @@ const ProductCard = ({ produto, onEditar, onExcluir }) => {
                 />
             </div>
 
-            {/* Conteúdo */}
             <div className="p-5">
 
                 {/* Categoria */}
@@ -24,12 +20,10 @@ const ProductCard = ({ produto, onEditar, onExcluir }) => {
                     {produto.categoria}
                 </span>
 
-                {/* Nome */}
                 <h2 className="mt-3 line-clamp-1 text-lg font-bold text-gray-900 dark:text-white">
                     {produto.nome}
                 </h2>
 
-                {/* Descrição */}
                 <p className="mt-2 line-clamp-2 min-h-[48px] text-sm text-gray-500 dark:text-gray-400">
                     {produto.descricao}
                 </p>
@@ -52,12 +46,8 @@ const ProductCard = ({ produto, onEditar, onExcluir }) => {
                     </p>
                 </div>
 
-                {/* Botões */}
+                {/* Ações — só Editar e Excluir agora */}
                 <div className="mt-4 grid grid-cols-2 gap-2">
-                    <Button variant="primary" className="!py-2 !text-sm">
-                        Comprar
-                    </Button>
-
                     <Button
                         variant="success"
                         className="!py-2 !text-sm"
@@ -68,7 +58,7 @@ const ProductCard = ({ produto, onEditar, onExcluir }) => {
 
                     <Button
                         variant="danger"
-                        className="col-span-2 !py-2 !text-sm"
+                        className="!py-2 !text-sm"
                         onClick={() => onExcluir(produto._id)}
                     >
                         Excluir

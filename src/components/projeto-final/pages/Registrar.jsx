@@ -3,7 +3,7 @@ import RegistrarForm from '../organisms/RegistrarForm';
 
 const Registrar = () => {
     return (
-        <PageLayout title="Criar conta">
+        <PageLayout title="Criar conta" largura="md">
             <RegistrarForm />
         </PageLayout>
     );

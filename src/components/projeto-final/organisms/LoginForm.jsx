@@ -1,6 +1,3 @@
-// Organismo: formulário de login completo.
-// Tem lógica de negócio: validação, chamada de API, salva token, redireciona.
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -20,7 +17,6 @@ const LoginForm = () => {
         e.preventDefault();
         setError('');
 
-        // Campos obrigatórios
         if (!email || !password) {
             setError('Todos os campos são obrigatórios!');
             return;
@@ -28,37 +24,31 @@ const LoginForm = () => {
 
         try {
             // 1) Faz login e recebe o token
-            const response = await axios.post(
+            const { data } = await axios.post(
                 'https://projeto-node-step-t5i1.vercel.app/login',
-                {
-                    email,
-                    senha: password,
-                }
+                { email, senha: password }
             );
 
-            const { token } = response.data;
+            const { token } = data;
             localStorage.setItem('token', token);
 
-            // 2) Busca o perfil pra pegar o role
-            const perfilResponse = await axios.get(
+            // 2) Busca o perfil do usuário autenticado
+            const perfil = await axios.get(
                 'https://projeto-node-step-t5i1.vercel.app/me',
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
+                { headers: { Authorization: `Bearer ${token}` } }
             );
 
-            localStorage.setItem('role', perfilResponse.data.role);
+            // ATENÇÃO: a API retorna { usuario: { id, nome, email, role } }
+            // Então o role está em perfil.data.usuario.role (aninhado!)
+            localStorage.setItem('role', perfil.data.usuario.role);
 
-            // 3) Redireciona pra Home
+            // 3) Redireciona pra home
             navigate('/user/home');
         } catch (err) {
-            console.error('Status:', err.response?.status);
-            console.error('Resposta da API:', err.response?.data);
-
+            console.error('Erro no login:', err.response?.data || err);
             setError(
                 err.response?.data?.message ||
+                err.response?.data?.erro ||
                 'Erro ao fazer login. Tente novamente.'
             );
         }

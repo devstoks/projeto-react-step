@@ -6,7 +6,7 @@ import LoginForm from '../organisms/LoginForm';
 
 const Login = () => {
     return (
-        <PageLayout title="Login">
+        <PageLayout title="Login" largura="md">
             <LoginForm />
         </PageLayout>
     );

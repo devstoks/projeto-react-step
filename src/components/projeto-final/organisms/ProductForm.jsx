@@ -1,7 +1,6 @@
 // Organismo: formulário de produto (criar OU editar).
 // A prop `modo` decide o comportamento: POST vs PUT, limpar vs redirecionar.
 
-
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -29,14 +28,12 @@ const ProductForm = ({ modo = 'criar', id = null }) => {
 
     const ehEdicao = modo === 'editar';
 
-    // Se for edição, busca o produto ao montar
     useEffect(() => {
         if (!ehEdicao || !id) return;
 
         const fetchProduto = async () => {
             try {
                 const { data } = await axios.get(`${API_URL}/produtos/${id}`);
-
                 setNome(data.nome || '');
                 setPreco(data.preco ?? '');
                 setDescricao(data.descricao || '');
@@ -58,7 +55,6 @@ const ProductForm = ({ modo = 'criar', id = null }) => {
         setError('');
         setMensagem('');
 
-        // Validação
         if (
             !nome || !preco || !descricao || !categoria ||
             !nota || !quantidade || !imagem
@@ -90,14 +86,8 @@ const ProductForm = ({ modo = 'criar', id = null }) => {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setMensagem('Produto criado com sucesso!');
-
-                // Limpa form
-                setNome('');
-                setPreco('');
-                setDescricao('');
-                setCategoria('');
-                setNota('');
-                setQuantidade('');
+                setNome(''); setPreco(''); setDescricao('');
+                setCategoria(''); setNota(''); setQuantidade('');
                 setImagem('');
             }
         } catch (err) {
@@ -113,56 +103,55 @@ const ProductForm = ({ modo = 'criar', id = null }) => {
     return (
         <form onSubmit={handleSubmit}>
 
-            <FormField
-                label="Nome do produto"
-                id="nome"
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-                placeholder="Ex: iPhone 12"
-            />
+            {/* LINHA 1: Nome + Categoria (2 colunas) */}
+            <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
+                <FormField
+                    label="Nome do produto"
+                    id="nome"
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
+                    placeholder="Ex: iPhone 12"
+                />
 
-            <FormField
-                label="Preço (R$)"
-                id="preco"
-                type="number"
-                value={preco}
-                onChange={(e) => setPreco(e.target.value)}
-                placeholder="0,00"
-            />
+                <FormField
+                    label="Categoria"
+                    id="categoria"
+                    as="select"
+                    value={categoria}
+                    onChange={(e) => setCategoria(e.target.value)}
+                >
+                    <option value="">Selecione</option>
+                    <option value="masculino">Masculino</option>
+                    <option value="feminino">Feminino</option>
+                    <option value="eletronicos">Eletrônicos</option>
+                    <option value="joias">Joias</option>
+                </FormField>
+            </div>
 
-            <FormField
-                label="Categoria"
-                id="categoria"
-                as="select"
-                value={categoria}
-                onChange={(e) => setCategoria(e.target.value)}
-            >
-                <option value="">Selecione</option>
-                <option value="masculino">Masculino</option>
-                <option value="feminino">Feminino</option>
-                <option value="eletronicos">Eletrônicos</option>
-                <option value="joias">Joias</option>
-            </FormField>
+            {/* LINHA 2: Preço + Avaliação (2 colunas) */}
+            <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
+                <FormField
+                    label="Preço (R$)"
+                    id="preco"
+                    type="number"
+                    value={preco}
+                    onChange={(e) => setPreco(e.target.value)}
+                    placeholder="0,00"
+                />
 
-            <FormField
-                label="Descrição"
-                id="descricao"
-                value={descricao}
-                onChange={(e) => setDescricao(e.target.value)}
-                placeholder="Descreva o produto..."
-            />
+                <FormField
+                    label="Avaliação (0 a 5)"
+                    id="nota"
+                    type="number"
+                    value={nota}
+                    onChange={(e) => setNota(e.target.value)}
+                    placeholder="Ex: 4.7"
+                />
+            </div>
 
+            {/* LINHA 3: Quantidade (largura cheia) */}
             <FormField
-                label="Avaliação (0 a 5)"
-                id="nota"
-                type="number"
-                value={nota}
-                onChange={(e) => setNota(e.target.value)}
-                placeholder="Ex: 4.7"
-            />
-
-            <FormField
-                label="Quantidade em estoque"
+                label="Quantidade de avaliações"
                 id="quantidade"
                 type="number"
                 value={quantidade}
@@ -170,6 +159,7 @@ const ProductForm = ({ modo = 'criar', id = null }) => {
                 placeholder="Ex: 100"
             />
 
+            {/* LINHA 4: URL da imagem (largura cheia) */}
             <FormField
                 label="URL da imagem"
                 id="imagem"
@@ -177,6 +167,15 @@ const ProductForm = ({ modo = 'criar', id = null }) => {
                 value={imagem}
                 onChange={(e) => setImagem(e.target.value)}
                 placeholder="https://exemplo.com/imagem.jpg"
+            />
+
+            {/* LINHA 5: Descrição (largura cheia) */}
+            <FormField
+                label="Descrição"
+                id="descricao"
+                value={descricao}
+                onChange={(e) => setDescricao(e.target.value)}
+                placeholder="Descreva o produto..."
             />
 
             <ErrorMessage>{error}</ErrorMessage>

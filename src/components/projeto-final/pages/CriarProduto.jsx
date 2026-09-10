@@ -3,7 +3,7 @@ import ProductForm from '../organisms/ProductForm';
 
 const CriarProduto = () => {
     return (
-        <PageLayout title="Criar Produto">
+        <PageLayout title="Criar Produto" largura="4xl">
             <ProductForm modo="criar" />
         </PageLayout>
     );

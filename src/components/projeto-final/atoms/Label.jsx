@@ -1,12 +1,11 @@
 // Átomo: rótulo de campo de formulário.
-// Não tem lógica — só renderiza o texto e associa ao input via htmlFor.
+// Sempre alinhado à esquerda, acima do input (padrão de lojas/forms).
 
 const Label = ({ htmlFor, children, className = '' }) => {
     return (
-        
         <label
             htmlFor={htmlFor}
-            className={`mb-1 block text-sm font-semibold text-gray-700 ${className}`}
+            className={`mb-1 block text-left text-sm font-semibold text-gray-700 dark:text-gray-200 ${className}`}
         >
             {children}
         </label>

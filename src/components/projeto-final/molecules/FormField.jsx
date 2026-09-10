@@ -1,13 +1,9 @@
-// Molécula: junta Label + Input.
-// É a peça "campo de formulário" — reutilizada em TODOS os forms do projeto.
-// Não tem lógica: só combina dois átomos.
-
 import Label from '../atoms/Label';
 import Input from '../atoms/Input';
 
-const FormField = ({ label, id, ...inputProps }) => {
+const FormField = ({ label, id, className = '', ...inputProps }) => {
     return (
-        <div className="mb-4">
+        <div className={`mb-5 text-left ${className}`}>
             <Label htmlFor={id}>{label}</Label>
             <Input id={id} {...inputProps} />
         </div>

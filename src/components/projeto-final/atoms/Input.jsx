@@ -1,6 +1,3 @@
-// Átomo: campo de texto OU select. Aceita a prop `as` pra escolher qual renderizar.
-// Evita criar dois átomos separados (Input e Select) só por causa de uma tag diferente.
-
 const Input = ({
     id,
     type = 'text',
@@ -11,10 +8,10 @@ const Input = ({
     children,
     className = '',
 }) => {
+    // Forçando tamanho grande: altura mínima, padding generoso, fonte 16px
     const baseClasses =
-        'w-full rounded border border-gray-300 px-3 py-2 text-black outline-none focus:border-blue-500';
+        'w-full rounded-lg border border-gray-300 bg-white px-4 py-3.5 text-base leading-6 text-gray-900 outline-none transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-400 dark:focus:ring-blue-900/40';
 
-    // Variante: select
     if (as === 'select') {
         return (
             <select
@@ -28,7 +25,6 @@ const Input = ({
         );
     }
 
-    // Padrão: input
     return (
         <input
             id={id}
