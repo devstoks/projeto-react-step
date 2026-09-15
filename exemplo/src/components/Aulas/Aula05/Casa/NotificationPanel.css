@@ -1,0 +1,301 @@
+.notification-panel {
+    width: 430px;
+    max-width: 92%;
+    margin: 40px auto;
+    font-family: Arial, sans-serif;
+}
+
+
+/* =========================
+   BOTÃO PRINCIPAL
+   ========================= */
+
+.main-button {
+    width: 100%;
+    padding: 14px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #2563eb;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.main-button:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================
+   PAINEL
+   ========================= */
+
+.panel {
+    margin-top: 12px;
+    padding: 20px;
+
+    background: white;
+
+    border-radius: 14px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.panel h3 {
+    margin: 0 0 18px;
+}
+
+
+/* =========================
+   LISTA DE NOTIFICAÇÕES
+   ========================= */
+
+.panel ul {
+    padding: 0;
+    margin: 0;
+
+    list-style: none;
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 10px;
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e5e7eb;
+}
+
+
+/* Conteúdo clicável */
+
+.notification-content {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    flex: 1;
+
+    border: none;
+    background: transparent;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.notification-content:hover strong {
+    color: #2563eb;
+}
+
+.priority {
+    font-size: 18px;
+}
+
+.notification-content strong {
+    display: block;
+    margin-bottom: 3px;
+}
+
+.notification-content p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   REMOVER NOTIFICAÇÃO
+   ========================= */
+
+.remove-button {
+    padding: 7px 10px;
+
+    border: none;
+    border-radius: 7px;
+
+    background: #ef4444;
+    color: white;
+
+    cursor: pointer;
+}
+
+.remove-button:hover {
+    background: #dc2626;
+}
+
+
+/* =========================
+   CHAT
+   ========================= */
+
+.chat-box {
+    margin-top: 20px;
+
+    overflow: hidden;
+
+    background: #e5e7eb;
+
+    border-radius: 14px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Cabeçalho */
+
+.chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 15px 18px;
+
+    background: #2563eb;
+    color: white;
+}
+
+.chat-header h3 {
+    margin: 0;
+}
+
+
+/* Botão fechar */
+
+.close-button {
+    width: 30px;
+    height: 30px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+.close-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+
+/* =========================
+   MENSAGENS
+   ========================= */
+
+.messages {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    padding: 20px;
+}
+
+
+/* Cada mensagem */
+
+.chat-message {
+    display: flex;
+    align-items: center;
+
+    align-self: flex-start;
+
+    max-width: 80%;
+
+    padding: 10px 12px;
+
+    background: white;
+
+    border-radius: 12px 12px 12px 3px;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.chat-message p {
+    margin: 0;
+
+    color: #1f2937;
+
+    line-height: 1.4;
+}
+
+
+/* Apagar mensagem */
+
+.delete-message {
+    margin-left: 10px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #9ca3af;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+.delete-message:hover {
+    color: #ef4444;
+}
+
+
+/* =========================
+   VAZIO
+   ========================= */
+
+.empty-message {
+    margin: 0;
+
+    padding: 15px;
+
+    text-align: center;
+
+    color: #64748b;
+}
+
+
+/* =========================
+   RESPONSIVO
+   ========================= */
+
+@media (max-width: 500px) {
+
+    .notification-panel {
+        width: 92%;
+    }
+
+    .notification-item {
+        align-items: flex-start;
+    }
+
+    .remove-button {
+        font-size: 11px;
+    }
+
+    .chat-message {
+        max-width: 90%;
+    }
+}
