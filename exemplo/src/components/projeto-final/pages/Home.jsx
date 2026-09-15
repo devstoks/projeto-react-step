@@ -9,6 +9,9 @@ import Button from '../atoms/Button';
 const Home = () => {
     const navigate = useNavigate();
 
+    // Lê o role direto do localStorage ("user" ou "admin")
+    const role = localStorage.getItem('role');
+
     const [produtos, setProdutos] = useState([]);
     const [termoFiltro, setTermoFiltro] = useState(null);
 
@@ -33,13 +36,16 @@ const Home = () => {
                             </p>
                         </div>
 
-                        <Button
-                            variant="success"
-                            className="!w-auto !px-5"
-                            onClick={() => navigate('/user/novo-produto')}
-                        >
-                            + Criar Produto
-                        </Button>
+                        {/* Botão "+ Criar Produto" só aparece para admin */}
+                        {role === 'admin' && (
+                            <Button
+                                variant="success"
+                                className="!w-auto !px-5"
+                                onClick={() => navigate('/user/novo-produto')}
+                            >
+                                + Criar Produto
+                            </Button>
+                        )}
                     </div>
 
                     {/* Filtro */}

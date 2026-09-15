@@ -7,6 +7,7 @@ const Button = ({
     onClick,
     variant = 'primary',
     className = '',
+    disabled = false,
 }) => {
     const variants = {
         primary: 'bg-blue-500 text-white hover:bg-blue-600',
@@ -19,7 +20,10 @@ const Button = ({
         <button
             type={type}
             onClick={onClick}
-            className={`w-full rounded py-2 font-semibold transition ${variants[variant]} ${className}`}
+            disabled={disabled}
+            className={`w-full rounded py-2 font-semibold transition ${variants[variant]} ${
+                disabled ? 'cursor-not-allowed opacity-50 hover:brightness-100' : ''
+            } ${className}`}
         >
             {children}
         </button>

@@ -6,6 +6,10 @@ import PrivateRoute from './components/projeto-final/routes/PrivateRoute';
 import Registrar from './components/projeto-final/pages/Registrar';
 import CreateProduct from './components/projeto-final/pages/CriarProduto';
 import EditarProduto from './components/projeto-final/pages/EditarProduto';
+import Carrinho from './components/projeto-final/pages/user/Carrinho';
+import Checkout from './components/projeto-final/pages/user/Checkout';
+import DetalhesProduto from './components/projeto-final/pages/user/DetalhesProduto';
+
 
 // Define as rotas e controla quais páginas exigem autenticação.
 function App() {
@@ -41,6 +45,33 @@ function App() {
           element={
             <PrivateRoute>
               <EditarProduto />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/user/carrinho"
+          element={
+            <PrivateRoute>
+              <Carrinho />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/user/carrinho/checkout"
+          element={
+            <PrivateRoute>
+              <Checkout />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/user/produto/:id"
+          element={
+            <PrivateRoute>
+              <DetalhesProduto />
             </PrivateRoute>
           }
         />

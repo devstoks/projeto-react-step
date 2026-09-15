@@ -3,13 +3,16 @@
 
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
+import { useCart } from '../contexts/CartContext';
 
 const Header = () => {
     const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
+    const { itens } = useCart();
 
     // Verifica se existe um usuário autenticado.
     const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
 
     // Remove os dados da sessão e retorna o usuário para o login.
     const handleLogout = () => {
@@ -83,6 +86,23 @@ const Header = () => {
                                 Sair
                             </button>
                         </>
+                    )}
+
+                    {/* Carrinho: fica visível para usuários comuns. */}
+                    {token && role === 'user' && (
+                        <NavLink
+                            to="/user/carrinho"
+                            aria-label="Ver carrinho"
+                            title="Ver carrinho"
+                            className="relative ml-2 flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-lg transition hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800"
+                        >
+                            🛒
+                            {itens.length > 0 && (
+                                <span className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                                    {itens.length}
+                                </span>
+                            )}
+                        </NavLink>
                     )}
 
                     {/* Alterna entre o tema claro e escuro. */}

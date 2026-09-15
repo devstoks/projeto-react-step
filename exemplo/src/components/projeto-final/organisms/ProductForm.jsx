@@ -1,5 +1,6 @@
 // Organismo: formulário de produto (criar OU editar).
-// A prop `modo` decide o comportamento: POST vs PUT, limpar vs redirecionar.
+// A prop `modo` decide o comportamento: POST vs PUT.
+// Após sucesso (criar ou editar), exibe um modal e volta pra Home.
 
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +8,7 @@ import axios from 'axios';
 
 import FormField from '../molecules/FormField';
 import ErrorMessage from '../molecules/ErrorMessage';
+import SuccessModal from '../molecules/SuccessModal';
 import Button from '../atoms/Button';
 
 const API_URL = 'https://projeto-node-step-t5i1.vercel.app';
@@ -24,7 +26,10 @@ const ProductForm = ({ modo = 'criar', id = null }) => {
     const [imagem, setImagem] = useState('');
 
     const [error, setError] = useState('');
-    const [mensagem, setMensagem] = useState('');
+
+    // Guarda a mensagem que aparece no modal de sucesso.
+    // String vazia = modal fechado.
+    const [sucesso, setSucesso] = useState('');
 
     const ehEdicao = modo === 'editar';
 
@@ -53,7 +58,6 @@ const ProductForm = ({ modo = 'criar', id = null }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
-        setMensagem('');
 
         if (
             !nome || !preco || !descricao || !categoria ||
@@ -80,15 +84,16 @@ const ProductForm = ({ modo = 'criar', id = null }) => {
                 await axios.put(`${API_URL}/produtos/${id}`, payload, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-                navigate('/user/home');
+
+                // Em vez de redirecionar direto, abre o modal.
+                setSucesso('Produto atualizado com sucesso!');
             } else {
                 await axios.post(`${API_URL}/produtos`, payload, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-                setMensagem('Produto criado com sucesso!');
-                setNome(''); setPreco(''); setDescricao('');
-                setCategoria(''); setNota(''); setQuantidade('');
-                setImagem('');
+
+                // Abre o modal de sucesso.
+                setSucesso('Produto criado com sucesso!');
             }
         } catch (err) {
             console.error('Erro:', err.response?.data);
@@ -100,97 +105,107 @@ const ProductForm = ({ modo = 'criar', id = null }) => {
         }
     };
 
+    // Chamado quando o usuário clica no botão do modal.
+    // Fecha o modal e volta pra Home.
+    const handleFecharModal = () => {
+        setSucesso('');
+        navigate('/user/home');
+    };
+
     return (
-        <form onSubmit={handleSubmit}>
+        <>
+            <form onSubmit={handleSubmit}>
 
-            {/* LINHA 1: Nome + Categoria (2 colunas) */}
-            <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
-                <FormField
-                    label="Nome do produto"
-                    id="nome"
-                    value={nome}
-                    onChange={(e) => setNome(e.target.value)}
-                    placeholder="Ex: iPhone 12"
-                />
+                {/* LINHA 1: Nome + Categoria (2 colunas) */}
+                <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
+                    <FormField
+                        label="Nome do produto"
+                        id="nome"
+                        value={nome}
+                        onChange={(e) => setNome(e.target.value)}
+                        placeholder="Ex: iPhone 12"
+                    />
 
-                <FormField
-                    label="Categoria"
-                    id="categoria"
-                    as="select"
-                    value={categoria}
-                    onChange={(e) => setCategoria(e.target.value)}
-                >
-                    <option value="">Selecione</option>
-                    <option value="masculino">Masculino</option>
-                    <option value="feminino">Feminino</option>
-                    <option value="eletronicos">Eletrônicos</option>
-                    <option value="joias">Joias</option>
-                </FormField>
-            </div>
+                    <FormField
+                        label="Categoria"
+                        id="categoria"
+                        as="select"
+                        value={categoria}
+                        onChange={(e) => setCategoria(e.target.value)}
+                    >
+                        <option value="">Selecione</option>
+                        <option value="masculino">Masculino</option>
+                        <option value="feminino">Feminino</option>
+                        <option value="eletronicos">Eletrônicos</option>
+                        <option value="joias">Joias</option>
+                    </FormField>
+                </div>
 
-            {/* LINHA 2: Preço + Avaliação (2 colunas) */}
-            <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
+                {/* LINHA 2: Preço + Avaliação (2 colunas) */}
+                <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
+                    <FormField
+                        label="Preço (R$)"
+                        id="preco"
+                        type="number"
+                        value={preco}
+                        onChange={(e) => setPreco(e.target.value)}
+                        placeholder="0,00"
+                    />
+
+                    <FormField
+                        label="Avaliação (0 a 5)"
+                        id="nota"
+                        type="number"
+                        value={nota}
+                        onChange={(e) => setNota(e.target.value)}
+                        placeholder="Ex: 4.7"
+                    />
+                </div>
+
+                {/* LINHA 3: Quantidade (largura cheia) */}
                 <FormField
-                    label="Preço (R$)"
-                    id="preco"
+                    label="Quantidade de avaliações"
+                    id="quantidade"
                     type="number"
-                    value={preco}
-                    onChange={(e) => setPreco(e.target.value)}
-                    placeholder="0,00"
+                    value={quantidade}
+                    onChange={(e) => setQuantidade(e.target.value)}
+                    placeholder="Ex: 100"
                 />
 
+                {/* LINHA 4: URL da imagem (largura cheia) */}
                 <FormField
-                    label="Avaliação (0 a 5)"
-                    id="nota"
-                    type="number"
-                    value={nota}
-                    onChange={(e) => setNota(e.target.value)}
-                    placeholder="Ex: 4.7"
+                    label="URL da imagem"
+                    id="imagem"
+                    type="url"
+                    value={imagem}
+                    onChange={(e) => setImagem(e.target.value)}
+                    placeholder="https://exemplo.com/imagem.jpg"
                 />
-            </div>
 
-            {/* LINHA 3: Quantidade (largura cheia) */}
-            <FormField
-                label="Quantidade de avaliações"
-                id="quantidade"
-                type="number"
-                value={quantidade}
-                onChange={(e) => setQuantidade(e.target.value)}
-                placeholder="Ex: 100"
+                {/* LINHA 5: Descrição (largura cheia) */}
+                <FormField
+                    label="Descrição"
+                    id="descricao"
+                    value={descricao}
+                    onChange={(e) => setDescricao(e.target.value)}
+                    placeholder="Descreva o produto..."
+                />
+
+                <ErrorMessage>{error}</ErrorMessage>
+
+                <Button type="submit" variant={ehEdicao ? 'success' : 'primary'}>
+                    {ehEdicao ? 'Atualizar Produto' : 'Criar Produto'}
+                </Button>
+            </form>
+
+            {/* Modal de sucesso (criar OU editar) */}
+            <SuccessModal
+                aberto={!!sucesso}
+                titulo={ehEdicao ? 'Produto atualizado!' : 'Produto criado!'}
+                mensagem={sucesso}
+                onFechar={handleFecharModal}
             />
-
-            {/* LINHA 4: URL da imagem (largura cheia) */}
-            <FormField
-                label="URL da imagem"
-                id="imagem"
-                type="url"
-                value={imagem}
-                onChange={(e) => setImagem(e.target.value)}
-                placeholder="https://exemplo.com/imagem.jpg"
-            />
-
-            {/* LINHA 5: Descrição (largura cheia) */}
-            <FormField
-                label="Descrição"
-                id="descricao"
-                value={descricao}
-                onChange={(e) => setDescricao(e.target.value)}
-                placeholder="Descreva o produto..."
-            />
-
-            <ErrorMessage>{error}</ErrorMessage>
-
-            {mensagem && (
-                <p className="mb-4 rounded border border-green-200 bg-green-50 px-3 py-2 text-center text-sm text-green-600 dark:border-green-900 dark:bg-green-950/40 dark:text-green-400">
-                    ✓ {mensagem}
-                </p>
-            )}
-
-            <Button type="submit" variant={ehEdicao ? 'success' : 'primary'}>
-                {ehEdicao ? 'Atualizar Produto' : 'Criar Produto'}
-            </Button>
-
-        </form>
+        </>
     );
 };
 
