@@ -2,7 +2,7 @@
 
 Projeto final desenvolvido durante o curso de **React da IT STEP**, evoluindo o CRUD desenvolvido anteriormente e reorganizando sua estrutura utilizando a metodologia **Atomic Design**.
 
-A aplicação permite autenticação de usuários, gerenciamento de produtos, filtragem por nome e alternância entre tema claro e escuro.
+A aplicação permite autenticação de usuários, gerenciamento de produtos, filtragem por nome, alternância entre tema claro e escuro e funcionalidades adicionais de compra, como detalhes do produto, carrinho e checkout.
 
 ## 🚀 Tecnologias
 
@@ -10,7 +10,9 @@ A aplicação permite autenticação de usuários, gerenciamento de produtos, fi
 
 **Bibliotecas e recursos:** `React` · `Vite` · `React Router` · `Axios` · `Material UI` · `Tailwind CSS`
 
-**API:** `REST API` · `JWT` · `LocalStorage`
+**API:** `REST API`
+**Autenticação:** `JWT`
+**Persistência local:** `LocalStorage`
 
 ---
 
@@ -22,20 +24,31 @@ O objetivo principal foi separar a interface em componentes reutilizáveis e org
 
 ### Funcionalidades
 
-- 🔐 Login de usuários
-- 📝 Cadastro de usuários
-- 🔑 Autenticação utilizando JWT
-- 🛡️ Proteção de rotas
-- 👤 Controle de função do usuário
-- 📦 Listagem de produtos
-- ➕ Criação de produtos
-- ✏️ Edição de produtos
-- 🗑️ Exclusão de produtos
-- 🔎 Filtro de produtos por nome
-- ⚡ Autocomplete utilizando Material UI
-- 🌙 Tema claro e escuro
-- 💾 Persistência do tema utilizando LocalStorage
-- 📱 Interface responsiva
+* 🔐 Login de usuários
+* 📝 Cadastro de usuários
+* 🔑 Autenticação utilizando JWT
+* 🛡️ Proteção de rotas
+* 👤 Controle de função do usuário
+* 📦 Listagem de produtos
+* ➕ Criação de produtos
+* ✏️ Edição de produtos
+* 🗑️ Exclusão de produtos
+* 🔎 Filtro de produtos por nome
+* ⚡ Autocomplete utilizando Material UI
+* 🌙 Tema claro e escuro
+* 💾 Persistência do tema utilizando LocalStorage
+* 📱 Interface responsiva
+
+### 🛒 Funcionalidades adicionais
+
+Além dos requisitos principais do projeto final, foram implementadas funcionalidades adicionais para ampliar a experiência da aplicação:
+
+* 🔍 Visualização de detalhes do produto
+* 🛒 Adição de produtos ao carrinho
+* 📋 Gerenciamento dos produtos no carrinho
+* 💳 Tela de checkout
+* 💰 Seleção de forma de pagamento
+* ✅ Modal de confirmação da compra
 
 ---
 
@@ -43,32 +56,40 @@ O objetivo principal foi separar a interface em componentes reutilizáveis e org
 
 A estrutura do projeto final foi organizada utilizando os cinco níveis do Atomic Design:
 
-```
+```text
 Atoms → Molecules → Organisms → Templates → Pages
 ```
 
-**Atoms** — os componentes mais básicos da interface.
+### Atoms
 
-```
+Os componentes mais básicos da interface.
+
+```text
 atoms/
 ├── Button.jsx
 ├── Input.jsx
 └── Label.jsx
 ```
 
-**Molecules** — combinam diferentes átomos para formar componentes reutilizáveis.
+### Molecules
 
-```
+Combinam diferentes átomos para formar componentes reutilizáveis.
+
+```text
 molecules/
 ├── ErrorMessage.jsx
 ├── FormField.jsx
+├── PaymentMethod.jsx
 ├── ProductCard.jsx
-└── ProductFilter.jsx
+├── ProductFilter.jsx
+└── SuccessModal.jsx
 ```
 
-**Organisms** — formam seções completas da aplicação e concentram comportamentos mais específicos.
+### Organisms
 
-```
+Formam seções completas da aplicação e concentram comportamentos mais específicos.
+
+```text
 organisms/
 ├── Header.jsx
 ├── LoginForm.jsx
@@ -77,29 +98,48 @@ organisms/
 └── RegistrarForm.jsx
 ```
 
-**Templates** — definem a estrutura visual das páginas.
+### Templates
 
-```
+Definem a estrutura visual das páginas.
+
+```text
 templates/
 └── PageLayout.jsx
 ```
 
-**Pages** — combinam os componentes anteriores e representam as telas da aplicação.
+### Pages
 
-```
+Combinam os componentes anteriores e representam as telas da aplicação.
+
+```text
 pages/
 ├── CriarProduto.jsx
 ├── EditarProduto.jsx
 ├── Home.jsx
 ├── Login.jsx
-└── Registrar.jsx
+├── Registrar.jsx
+└── user/
+    ├── Carrinho.jsx
+    ├── Checkout.jsx
+    └── DetalhesProduto.jsx
+```
+
+Além dos cinco níveis do Atomic Design, o projeto possui pastas auxiliares para gerenciamento de estado global e proteção de rotas:
+
+```text
+contexts/
+└── CartContext.jsx
+└── ThemeContext.jsx
+
+routes/
+└── PrivateRoute.jsx
 ```
 
 ---
 
 ## 📁 Estrutura do projeto
 
-```
+```text
 src/
 │
 ├── components/
@@ -128,8 +168,10 @@ src/
 │       ├── molecules/
 │       │   ├── ErrorMessage.jsx
 │       │   ├── FormField.jsx
+│       │   ├── PaymentMethod.jsx
 │       │   ├── ProductCard.jsx
-│       │   └── ProductFilter.jsx
+│       │   ├── ProductFilter.jsx
+│       │   └── SuccessModal.jsx
 │       │
 │       ├── organisms/
 │       │   ├── Header.jsx
@@ -146,9 +188,14 @@ src/
 │       │   ├── EditarProduto.jsx
 │       │   ├── Home.jsx
 │       │   ├── Login.jsx
-│       │   └── Registrar.jsx
+│       │   ├── Registrar.jsx
+│       │   └── user/
+│       │       ├── Carrinho.jsx
+│       │       ├── Checkout.jsx
+│       │       └── DetalhesProduto.jsx
 │       │
 │       ├── contexts/
+│       │   ├── CartContext.jsx
 │       │   └── ThemeContext.jsx
 │       │
 │       └── routes/
@@ -167,7 +214,7 @@ As aulas anteriores permanecem organizadas dentro de `components/Aulas`, enquant
 
 A autenticação utiliza JWT. O fluxo de login funciona da seguinte forma:
 
-```
+```text
 Login
   ↓
 POST /login
@@ -185,7 +232,7 @@ Acesso à área protegida
 
 As rotas protegidas utilizam o componente `PrivateRoute`:
 
-```
+```text
 Usuário
    │
    ├── Sem token ──────→ /login
@@ -193,25 +240,30 @@ Usuário
    └── Com token ──────→ Área protegida
 ```
 
+O logout remove os dados de autenticação armazenados no `LocalStorage` e redireciona o usuário para a página de login.
+
 ---
 
 ## 🛡️ Rotas
 
-**Rotas públicas**
+### Rotas públicas
 
-| Rota | Página |
-|---|---|
-| `/` | Redireciona para Login |
-| `/login` | Login |
-| `/registrar` | Cadastro |
+| Rota         | Página                 |
+| ------------ | ---------------------- |
+| `/`          | Redireciona para Login |
+| `/login`     | Login                  |
+| `/registrar` | Cadastro               |
 
-**Rotas protegidas**
+### Rotas protegidas
 
-| Rota | Página |
-|---|---|
-| `/user/home` | Lista de produtos |
-| `/user/novo-produto` | Criar produto |
-| `/user/produtos/editar/:id` | Editar produto |
+| Rota                        | Página              |
+| --------------------------- | ------------------- |
+| `/user/home`                | Lista de produtos   |
+| `/user/novo-produto`        | Criar produto       |
+| `/user/produtos/editar/:id` | Editar produto      |
+| `/user/produtos/:id`        | Detalhes do produto |
+| `/user/carrinho`            | Carrinho            |
+| `/user/checkout`            | Checkout            |
 
 ---
 
@@ -219,9 +271,9 @@ Usuário
 
 O gerenciamento de produtos utiliza a API Node disponibilizada durante o curso.
 
-**Operações utilizadas**
+### Operações utilizadas
 
-```
+```text
 GET     /produtos
 GET     /produtos/:id
 POST    /produtos
@@ -231,9 +283,9 @@ DELETE  /produtos/:id
 
 As requisições são realizadas utilizando Axios.
 
-**Fluxo de listagem**
+### Fluxo de listagem
 
-```
+```text
 API
  ↓
 ProductList
@@ -241,9 +293,9 @@ ProductList
 ProductCard
 ```
 
-**Fluxo de criação e edição**
+### Fluxo de criação e edição
 
-```
+```text
 Page
  ↓
 ProductForm
@@ -266,9 +318,9 @@ O mesmo `ProductForm` é reutilizado nos dois modos:
 
 O filtro foi desenvolvido como um componente reutilizável: `ProductFilter`, utilizando o componente `Autocomplete` do Material UI.
 
-**Fluxo**
+### Fluxo
 
-```
+```text
 API
  ↓
 ProductList
@@ -286,8 +338,36 @@ Produtos filtrados
 
 O componente possui dois controles:
 
-- **Filtrar** — aplica o produto selecionado.
-- **Limpar** — remove o filtro e exibe novamente todos os produtos.
+* **Filtrar** — aplica o produto selecionado.
+* **Limpar** — remove o filtro e exibe novamente todos os produtos.
+
+---
+
+## 🛒 Carrinho e Checkout
+
+O carrinho utiliza o `CartContext` para compartilhar o estado dos produtos entre as páginas da aplicação.
+
+### Fluxo
+
+```text
+ProductCard
+ ↓
+Adicionar ao carrinho
+ ↓
+CartContext
+ ↓
+Carrinho
+ ↓
+Checkout
+ ↓
+Forma de pagamento
+ ↓
+Confirmação
+```
+
+O `CartContext` permite centralizar o gerenciamento dos produtos adicionados ao carrinho, evitando a necessidade de passar essas informações manualmente entre diferentes componentes.
+
+A tela de checkout utiliza o componente `PaymentMethod` para selecionar a forma de pagamento e o `SuccessModal` para apresentar a confirmação da operação.
 
 ---
 
@@ -305,37 +385,39 @@ A preferência do usuário também é armazenada no LocalStorage, permitindo man
 
 A interface foi desenvolvida utilizando:
 
-- Tailwind CSS
-- Material UI
-- Layout responsivo
-- Componentes reutilizáveis
-- Dark Mode
+* Tailwind CSS
+* Material UI
+* Layout responsivo
+* Componentes reutilizáveis
+* Dark Mode
 
 O `PageLayout` é utilizado para manter uma estrutura visual consistente entre as páginas.
+
+O `Header` centraliza elementos de navegação, controle de tema, acesso ao carrinho e logout.
 
 ---
 
 ## ⚙️ Como executar o projeto
 
-**1. Clone o repositório**
+### 1. Clone o repositório
 
 ```bash
 git clone https://github.com/devstoks/projeto-react-step.git
 ```
 
-**2. Entre na pasta do projeto**
+### 2. Entre na pasta do projeto
 
 ```bash
 cd projeto-react-step/exemplo
 ```
 
-**3. Instale as dependências**
+### 3. Instale as dependências
 
 ```bash
 npm install
 ```
 
-**4. Execute o projeto**
+### 4. Execute o projeto
 
 ```bash
 npm run dev
@@ -365,50 +447,57 @@ npm run preview
 
 O projeto foi publicado na Vercel, utilizando o Vite como ferramenta de build.
 
-**Configuração**
+### Configuração
 
-- Framework: `Vite`
-- Build Command: `npm run build`
-- Output Directory: `dist`
+* **Framework:** `Vite`
+* **Build Command:** `npm run build`
+* **Output Directory:** `dist`
 
-**Aplicação online:** [projeto-react-step-iota.vercel.app](https://projeto-react-step-iota.vercel.app/login)
+### Aplicação online
+
+[projeto-react-step-iota.vercel.app](https://projeto-react-step-iota.vercel.app/login)
 
 ---
 
 ## 🎥 Apresentação
 
-Vídeo de apresentação do projeto: [link/arquivo do vídeo aqui]
+O vídeo de apresentação está disponível dentro do próprio repositório:
+
+```text
+src/assets/video/video projeto react.mp4
+```
 
 O vídeo apresenta:
 
-- Organização do projeto com Atomic Design
-- Funcionamento da aplicação
-- Autenticação
-- CRUD de produtos
-- Filtro com Material UI
-- Tema claro e escuro
-- Aplicação publicada
+* Organização do projeto com Atomic Design
+* Funcionamento da aplicação
+* Autenticação
+* CRUD de produtos
+* Filtro com Material UI
+* Tema claro e escuro
+* Funcionalidades adicionais
+* Aplicação publicada na Vercel
 
 ---
 
 ## 📚 Objetivo acadêmico
 
-Este projeto faz parte do Projeto Final de React da formação e teve como objetivo aplicar na prática conceitos estudados durante as aulas, principalmente:
+Este projeto faz parte do **Projeto Final de React da IT STEP** e teve como objetivo aplicar na prática conceitos estudados durante as aulas, principalmente:
 
-- Componentização
-- Props
-- Estado
-- Hooks
-- React Router
-- Context API
-- Consumo de APIs REST
-- Axios
-- Autenticação
-- CRUD
-- Material UI
-- Tailwind CSS
-- Atomic Design
-- Deploy de aplicações React
+* Componentização
+* Props
+* Estado
+* Hooks
+* React Router
+* Context API
+* Consumo de APIs REST
+* Axios
+* Autenticação
+* CRUD
+* Material UI
+* Tailwind CSS
+* Atomic Design
+* Deploy de aplicações React
 
 ---
 
@@ -422,6 +511,6 @@ Desenvolvedor Full Stack em formação, com foco em desenvolvimento web e backen
 
 ## 📄 Status
 
-Projeto final concluído e publicado na Vercel.
+**Projeto final concluído e publicado na Vercel.**
 
 Projeto desenvolvido para fins acadêmicos durante a formação em desenvolvimento Full Stack.
